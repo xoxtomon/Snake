@@ -59,6 +59,9 @@ def main():
                 mySnake.drawSnake()
                 pygame.display.update()
 
+                if mySnake.checkDeath(WINDOW_H,WINDOW_W):
+                    sys.exit()
+
         mySnake.move(mySnake.currDirection)
         myBoard.printBoard()
         myFruit.drawFruit()
@@ -66,6 +69,9 @@ def main():
         if mySnake.checkEatFruit(myFruit.posx, myFruit.posy):
             myFruit.newFruit()
             mySnake.grow()
+
+        if mySnake.checkDeath(WINDOW_H,WINDOW_W):
+            sys.exit()
 
         mySnake.drawSnake()
 

@@ -53,3 +53,16 @@ class Snake:
         else:
             self.body.append(
                 (self.body[0][0], self.body[0][1] - self.bodySize))
+
+    def checkDeath(self, WINDOW_H, WINDOW_W):
+        # TODO: KILL WITH BOUNDARIES
+        snakeHead = self.body[0]
+
+        eatMyself = snakeHead in self.body[1:]
+        
+        passWidth = snakeHead[0] > WINDOW_W or snakeHead[0] < 0
+        passHeight = snakeHead[1] > WINDOW_H or snakeHead[1] < 0 
+
+        # return eatMyself and not passWidth and not passHeight
+        return eatMyself and not passHeight and not passWidth
+
