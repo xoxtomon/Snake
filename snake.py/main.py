@@ -4,6 +4,7 @@ import window
 import board
 import snake
 import fruit
+import time
 
 WINDOW_W, WINDOW_H = 500, 500
 SCREEN = pygame.display.set_mode((WINDOW_W, WINDOW_H))
@@ -11,6 +12,7 @@ SCREEN = pygame.display.set_mode((WINDOW_W, WINDOW_H))
 # BOARD_LIMITS =
 SQUARE_SIZE = 50
 SNAKE_SCALE = 0.75
+SNAKE_STEP = 0.15
 FRUIT_SCALE = 0.80
 
 
@@ -23,8 +25,11 @@ def main():
     myFruit = fruit.Fruit(SCREEN, SQUARE_SIZE, FRUIT_SCALE)
     myFruit.newFruit()
 
+    playing = False
+
     while True:
         for event in pygame.event.get():
+            playing = True
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
@@ -41,10 +46,20 @@ def main():
                     mySnake.move('down')
                     mySnake.setCurrDir('down')
 
+                time.sleep(SNAKE_STEP)
                 myBoard.printBoard()
                 mySnake.drawSnake()
                 myFruit.drawFruit()
-            pygame.display.update()
+                pygame.display.update()
+
+        # if playing:
+        mySnake.move(mySnake.currDirection)
+        myBoard.printBoard()
+        myFruit.drawFruit()
+        mySnake.drawSnake()
+
+        time.sleep(SNAKE_STEP)
+        pygame.display.update()
 
 
 if __name__ == '__main__':

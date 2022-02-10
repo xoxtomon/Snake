@@ -18,18 +18,19 @@ class Snake:
             pygame.draw.rect(self.screen, self.bodyColor, rect)
 
     def move(self, direction):
+        increment = (self.bodySize/self.bodyScale)
         if direction == 'right':
             self.body.insert(
-                0, (self.body[0][0] + (self.bodySize/self.bodyScale), self.body[0][1]))
+                0, (self.body[0][0] + increment, self.body[0][1]))
         elif direction == 'left':
             self.body.insert(
-                0, (self.body[0][0] - (self.bodySize/self.bodyScale), self.body[0][1]))
+                0, (self.body[0][0] - increment, self.body[0][1]))
         elif direction == 'up':
             self.body.insert(
-                0, (self.body[0][0], self.body[0][1] - (self.bodySize/self.bodyScale)))
+                0, (self.body[0][0], self.body[0][1] - increment))
         elif direction == 'down':
             self.body.insert(
-                0, (self.body[0][0], self.body[0][1] + (self.bodySize/self.bodyScale)))
+                0, (self.body[0][0], self.body[0][1] + increment))
         self.body.pop()
         print(f'Body: {self.body}\nDirection: {self.currDirection}')
 
