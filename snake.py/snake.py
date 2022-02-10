@@ -32,17 +32,24 @@ class Snake:
             self.body.insert(
                 0, (self.body[0][0], self.body[0][1] + increment))
         self.body.pop()
-        print(f'Body: {self.body}\nDirection: {self.currDirection}')
+        # print(f'Body: {self.body}\nDirection: {self.currDirection}')
 
     def setCurrDir(self, direction):
         self.currDirection = direction
 
-    def getNextmove(self, dir):
-        if dir == 'right':
-            return self.body[0][0] + (self.bodySize/self.bodyScale)
-        if dir == 'left':
-            return self.body[0][0] - (self.bodySize/self.bodyScale)
-        if dir == 'up':
-            return self.body[0][1] - (self.bodySize/self.bodyScale)
-        if dir == 'down':
-            return self.body[0][1] + (self.bodySize/self.bodyScale)
+    def checkEatFruit(self, posx, posy):
+        return (posx + 6.25) == self.body[0][0] and (posy + 6.25) == self.body[0][1]
+
+    def grow(self):
+        if self.currDirection == 'right':
+            self.body.append(
+                (self.body[0][0] - self.bodySize, self.body[0][1]))
+        elif self.currDirection == 'left':
+            self.body.append(
+                (self.body[0][0] + self.bodySize, self.body[0][1]))
+        elif self.currDirection == 'up':
+            self.body.append(
+                (self.body[0][0], self.body[0][1] + self.bodySize))
+        else:
+            self.body.append(
+                (self.body[0][0], self.body[0][1] - self.bodySize))

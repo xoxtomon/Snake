@@ -25,6 +25,8 @@ def main():
     myFruit = fruit.Fruit(SCREEN, SQUARE_SIZE, FRUIT_SCALE)
     myFruit.newFruit()
 
+    print(f'fruta x: {myFruit.posx} y: {myFruit.posy}')
+
     playing = False
 
     while True:
@@ -48,14 +50,23 @@ def main():
 
                 time.sleep(SNAKE_STEP)
                 myBoard.printBoard()
-                mySnake.drawSnake()
                 myFruit.drawFruit()
+
+                if mySnake.checkEatFruit(myFruit.posx, myFruit.posy):
+                    myFruit.newFruit()
+                    mySnake.grow()
+
+                mySnake.drawSnake()
                 pygame.display.update()
 
-        # if playing:
         mySnake.move(mySnake.currDirection)
         myBoard.printBoard()
         myFruit.drawFruit()
+
+        if mySnake.checkEatFruit(myFruit.posx, myFruit.posy):
+            myFruit.newFruit()
+            mySnake.grow()
+
         mySnake.drawSnake()
 
         time.sleep(SNAKE_STEP)
