@@ -5,6 +5,7 @@ import board
 import snake
 import fruit
 import time
+import score
 
 WINDOW_W, WINDOW_H = 500, 500
 SCREEN = pygame.display.set_mode((WINDOW_W, WINDOW_H))
@@ -17,21 +18,21 @@ FRUIT_SCALE = 0.80
 
 
 def main():
-    window.window(WINDOW_W, WINDOW_H)
+    pygame.init()
     myBoard = board.Board(SCREEN, WINDOW_H, WINDOW_W, SQUARE_SIZE)
-    myBoard.printBoard()
     mySnake = snake.Snake(SCREEN, 206.25, 206.25, SQUARE_SIZE, SNAKE_SCALE)
-    mySnake.drawSnake()
     myFruit = fruit.Fruit(SCREEN, SQUARE_SIZE, FRUIT_SCALE)
+    myScore = score.Score(12, 0, 25, (255, 82, 0), 'arial')
+    window.window(WINDOW_W, WINDOW_H)
+    myBoard.printBoard()
+    mySnake.drawSnake()
     myFruit.newFruit()
+    myScore.drawScore(SCREEN)
 
     print(f'fruta x: {myFruit.posx} y: {myFruit.posy}')
 
-    playing = False
-
     while True:
         for event in pygame.event.get():
-            playing = True
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
@@ -55,11 +56,13 @@ def main():
                 if mySnake.checkEatFruit(myFruit.posx, myFruit.posy):
                     myFruit.newFruit()
                     mySnake.grow()
+                    myScore.updateScore(100)
 
                 mySnake.drawSnake()
+                myScore.drawScore(SCREEN)
                 pygame.display.update()
 
-                if mySnake.checkDeath(WINDOW_H,WINDOW_W):
+                if mySnake.checkDeath(WINDOW_H, WINDOW_W):
                     sys.exit()
 
         mySnake.move(mySnake.currDirection)
@@ -69,8 +72,10 @@ def main():
         if mySnake.checkEatFruit(myFruit.posx, myFruit.posy):
             myFruit.newFruit()
             mySnake.grow()
+            myScore.updateScore(100)
+        myScore.drawScore(SCREEN)
 
-        if mySnake.checkDeath(WINDOW_H,WINDOW_W):
+        if mySnake.checkDeath(WINDOW_H, WINDOW_W):
             sys.exit()
 
         mySnake.drawSnake()

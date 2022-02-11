@@ -55,14 +55,11 @@ class Snake:
                 (self.body[0][0], self.body[0][1] - self.bodySize))
 
     def checkDeath(self, WINDOW_H, WINDOW_W):
-        # TODO: KILL WITH BOUNDARIES
+        return self.collissionMyself() or self.collissionWindow(WINDOW_W, WINDOW_H)
+
+    def collissionMyself(self):
+        return self.body[0] in self.body[1:]
+
+    def collissionWindow(self, window_W, window_H):
         snakeHead = self.body[0]
-
-        eatMyself = snakeHead in self.body[1:]
-        
-        passWidth = snakeHead[0] > WINDOW_W or snakeHead[0] < 0
-        passHeight = snakeHead[1] > WINDOW_H or snakeHead[1] < 0 
-
-        # return eatMyself and not passWidth and not passHeight
-        return eatMyself and not passHeight and not passWidth
-
+        return (snakeHead[0] > window_W + 6.25) or snakeHead[0] < 0 or (snakeHead[1] > window_H + 6.25) or snakeHead[1] < 0
