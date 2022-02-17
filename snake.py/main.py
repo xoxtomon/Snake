@@ -29,8 +29,6 @@ def main():
     myFruit.newFruit()
     myScore.drawScore(SCREEN)
 
-    print(f'fruta x: {myFruit.posx} y: {myFruit.posy}')
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -63,6 +61,7 @@ def main():
                 pygame.display.update()
 
                 if mySnake.checkDeath(WINDOW_H, WINDOW_W):
+                    print(f"Score:{myScore.currentScore}")
                     sys.exit()
 
         mySnake.move(mySnake.currDirection)
@@ -76,6 +75,7 @@ def main():
         myScore.drawScore(SCREEN)
 
         if mySnake.checkDeath(WINDOW_H, WINDOW_W):
+            print(f"Score:{myScore.currentScore}")
             sys.exit()
 
         mySnake.drawSnake()
